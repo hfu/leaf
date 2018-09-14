@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>leaf</title>
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.vectorgrid@1.3.0/dist/Leaflet.VectorGrid.bundled.min.js"></script>
+</head>
+<body>
+<div id="map" style="position:absolute;top:0;left:0;bottom:0;right:0;"></div>
+<script>
+var map = L.map("map", {
+  maxZoom: 19,
+  zoom: 15,
+  center: [42.7450, 141.9123]
+});
+
+L.tileLayer('https://maps.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', {
+  attribution: "地理院",
+  minZoom: 2, maxNativeZoom: 19
+}).addTo(map);
+
+L.vectorGrid.protobuf("https://vectortiles.xyz/zxy/rdcl/{z}/{x}/{y}", {
+  attribution: "地理院",
+  maxNativeZoom: 16,
+  minNativeZoom: 16,
+  maxZoom: 19,
+  rendererFactory: L.canvas.tile,
+  vectorTileLayerStyles: {
+    "rdcl": {
+      color: "red",
+      weight: 2
+    }
+  }
+}).addTo(map);
+</script>
+</body>
+</html>
